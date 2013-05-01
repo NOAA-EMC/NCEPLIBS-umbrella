@@ -12,4 +12,5 @@ sigio          https://svnemc.ncep.noaa.gov/projects/nceplibs/sigio/tags/sigio_v
 sp             https://svnemc.ncep.noaa.gov/projects/nceplibs/sp/tags/v2.0.1/
 w3emc          https://svnemc.ncep.noaa.gov/projects/nceplibs/w3emc/tags/w3emc_v2.0.5-surrogate/
 w3nco          https://svnemc.ncep.noaa.gov/projects/nceplibs/w3nco/tags/v2.0.6/
-crtm           https://svnemc.ncep.noaa.gov/projects/crtm/tags/REL-2.1.2/src/
+crtm-2.0.6     https://svnemc.ncep.noaa.gov/projects/crtm/releases/REL-2.0.6_nofix/
+crtm-2.1.2     https://svnemc.ncep.noaa.gov/projects/crtm/releases/REL-2.1.2_nofix/
