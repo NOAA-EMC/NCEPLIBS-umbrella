@@ -1,0 +1,81 @@
+#!/bin/sh
+set -eux
+#-------------------------------------------------------------------------------
+cwd=`pwd`
+source ../../../machine-setup.sh > /dev/null 2>&1
+
+#export LIBNAME=bufr
+#export VER=v11.0.1
+if [ $VER = "v10.2.5" ]; then
+export FC=ifort
+export CC=icc
+else
+export FCMP=ifort
+export CCMP=icc
+fi
+
+
+if [ $target = wcoss_cray ]; then
+ if [ $VER = "v10.2.5" ]; then
+  export FC=ftn
+  export CC=icc
+ else
+  export FCMP=ftn
+  export CCMP=icc
+ fi
+  module load PrgEnv-intel
+  module load craype-sandybridge
+elif [ $target = "wcoss" ]; then
+  module load ics/12.1
+elif [ $target = "theia" ]; then
+  module load intel/14.0.2
+elif [ $target = "gaea" ]; then
+  :
+elif [ $target = "jet" ]; then
+  module load intel/12.1.4
+elif [ $target = "dell" ]; then
+  module load ips/18.0.1.163 impi/18.0.1
+fi
+
+#
+#     Compile BUFR library
+#
+if [ $VER = "v10.2.5" ]; then
+#-------------------------------------------------------------------------------
+export COMP=intel
+export MCMODEL="-mcmodel=medium"
+CPPFLAGS=" -P -traditional-cpp"
+if [ $target = wcoss_cray ]; then
+cp ../../script/build/makefile/bufr/makebufrlib.sh .
+else
+cp ../../script/build/makefile/bufr/makebufrlib.sh_$target makebufrlib.sh
+fi
+./makebufrlib.sh
+mkdir -p ../../libs/${LIBNAME}_${VER}
+ if [ $target = wcoss_cray ]; then
+ mv ../../*.a ../../libs/${LIBNAME}_${VER}/.
+ rm -rf ../../*.a
+ else
+ mv ../../intel/*.a ../../libs/${LIBNAME}_${VER}/.
+ rm -rf ../../intel 
+ fi
+else
+
+export COMP=intel
+rm -f ../../libs/${LIBNAME}_${VER}/libbufr_${VER}_*.a
+cp ../../script/build/makefile/bufr/makebufrlib.sh_$target makebufrlib.sh
+./makebufrlib.sh
+mkdir -p ../../libs/${LIBNAME}_${VER}
+mv ../../intel/*.a ../../libs/${LIBNAME}_${VER}/.
+rm -rf ../../intel makebufrlib.sh
+
+fi
+#-------------------------------------------------------------------------------
+#     Create modulefile
+cd ../../
+lwd=`pwd`
+cd $cwd
+mkdir -p $lwd/modulefiles/$LIBNAME
+cat modulefile.template | sed s:_CWD_:$lwd:g > $lwd/modulefiles/$LIBNAME/$VER
+
+exit

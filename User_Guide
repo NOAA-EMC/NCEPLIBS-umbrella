@@ -1,0 +1,123 @@
+NCEPLIBS FV3 Build
+
+Hang Lei, Mark Iredell, George Vandenberghe
+NOAA NCEP Environmental Modeling Center(EMC), NCEPLIBS Group
+Contact: Hang.Lei@noaa.gov
+
+(1) Introduction
+This version of NCEPLIBS-umbrella build software package is specialized in supporting FV3 associated developments. It is based on the NOAA VLAB platform. The software package directly get code from the VLAB system, which required NOAA email account access. The code is based on the current indenpendent version of code preapred by each library manager. Therefore, each library version is self-compiled as well as compiled by the NCEPLIBS-umbrella script.    
+
+(2) Software Structure
+
+NCEPLIBS-umbrella
+            |
+            `--NCEPLIBS-FV3.sh
+            |
+            `--setlib.conf
+            |
+            `--machine-setup.sh
+            |
+            `--lib/
+                |
+                `--script/
+                |     |
+                |     `--build/
+                |     |    `--all comiple scripts
+                |     |
+                |     `--unixmodule/
+                |          `--all unix module template
+                `--sorc/
+                |     `--(storage for library code)
+                |
+                `--libs/
+                |     `--(storage for lib files *.a)
+                `--ext_libs/
+                |     `--(storage for external lib files *.a)
+                `--incmod/
+                |     `--(storage for inc files *.mod)
+                `--modulefiles/
+                      `--(storage for unix modules)
+
+(3) Access requirements and support machines
+The use of this package requires the setup of VLAB gerrit under your login account. With NOAA vlab  account setup, you should be able to git clone --recursive gerrit:NCEPLIBS-any library without problem.
+Currently, it supports six machines including WCOSS IBM, WCOSS Cray, Theia, WCOSS Dell, Jet, and Gaea. The front four was tested and fully supported. 
+
+(4) Use of the software.
+step A: select the libraries to comiple and install
+%vi setlib.conf
+=====================================================================================
+### setup/select library install:
+#------------------------------------------------------------------------------------
+#Y/N        # Library name                  #Version   #Group         #Compiler
+#------------------------------------------------------------------------------------
+#Indenpendent NCEP libraries
+#------------------------------------------------------------------------------------
+INSTALL     | bacio                         |v2.0.2    |NCEPLIBS      |             |
+INSTALL     | bufr                          |v10.2.5   |NCEPLIBS      |             |
+INSTALL     | bufr                          |v11.0.1   |NCEPLIBS      |             |
+INSTALL     | bufr                          |v11.2.0   |NCEPLIBS      |             |
+INSTALL     | crtm                          |v2.0.6    |              |             |
+INSTALL     | crtm                          |v2.2.3    |              |             |
+INSTALL     | crtm                          |v2.2.5    |              |             |
+INSTALL     | crtm                          |v2.2.6    |              |             |
+INSTALL     | g2tmpl                        |v1.3.0    |NCEPLIBS      |             |
+INSTALL     | g2tmpl                        |v1.5.0    |NCEPLIBS      |             |
+INSTALL     | gfsio                         |v1.1.0    |NCEPLIBS      |             |
+INSTALL     | ip                            |v2.0.0    |NCEPLIBS      |             |
+INSTALL     | ip                            |v3.0.0    |NCEPLIBS      |             |
+INSTALL     | ip                            |v3.0.1    |NCEPLIBS      |             |
+INSTALL     | landsfcutil                   |v2.1.0    |NCEPLIBS      |             |
+INSTALL     | nemsio                        |v2.2.3    |NCEPLIBS      |             |
+INSTALL     | sfcio                         |v1.0.0    |NCEPLIBS      |             |
+INSTALL     | sigio                         |v2.0.1    |NCEPLIBS      |             |
+INSTALL     | sigio                         |v2.1.0    |NCEPLIBS      |             |
+INSTALL     | sp                            |v2.0.2    |NCEPLIBS      |             |
+INSTALL     | w3nco                         |v2.0.6    |NCEPLIBS      |             |
+INSTALL     | graphics                      |v2.0.0    |NCEPLIBS      |             |
+##INSTALL     |                             |v2.0.2    |              |             |
+#
+#------------------------------------------------------------------------------------
+#External libraries support other libraries
+#------------------------------------------------------------------------------------
+INSTALL     | jasper                        |v1.900.1  |              |             |
+INSTALL     | png                           |v1.2.44   |              |             |
+INSTALL     | z                             |v1.2.6    |              |             |
+###INSTALL     |                         |v1.3.0    |            |             |
+#
+
+#------------------------------------------------------------------------------------
+#Denpendent NCEP libraries
+#------------------------------------------------------------------------------------
+INSTALL     | nemsiogfs                     |v2.0.1    |NCEPLIBS      |             |
+INSTALL     | w3emc                         |v2.2.0    |NCEPLIBS      |             |
+INSTALL     | w3emc                         |v2.3.0    |NCEPLIBS      |             |
+INSTALL     | g2c                           |v1.5.0    |NCEPLIBS      |             |
+INSTALL     | g2                            |v3.1.0    |NCEPLIBS      |             |
+##
+#
+#------------------------------------------------------------------------------------
+##External libraries
+##------------------------------------------------------------------------------------
+INSTALL     | xmlparse                      |v2.0.0    |              |             |
+INSTALL     | hdf5                          |v1.8.18   |              |             |
+INSTALL     | netcdf                        |v3.6.3    |              |             |
+INSTALL     | netcdf                        |v4.4.1.1  |              |             |
+INSTALL     | netcdf                        |v4.4.4    |              |             |
+INSTALL     | esmf                          |v7.1.0r   |              |             |
+##INSTALL     |                         |v1.3.0    |            |             |
+#
+======================================================================================
+                                                                                      
+After open the file comment out the library versions that you won't comiple.
+On this release, we did not setup comipler versions, since the FV3 application requires intel compiler with required versions.
+
+Step B: Compile and Install Libraries
+%./NCEPLIBS-FV3.sh
+It will install all the libraries on your target machine under your account with the structure shown in (2).
+
+
+
+
+
+
+

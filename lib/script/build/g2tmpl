@@ -1,0 +1,82 @@
+#!/bin/sh
+set -eux
+#-----------------------------------------------------
+cwd=`pwd`
+source ../../../machine-setup.sh > /dev/null 2>&1
+
+#export LIBNAME=g2tmpl
+#export VER=v1.5.0
+export FCMP=ifort
+export CCMP=icc
+
+if [ $target = wcoss_cray ]; then
+  export FCMP=ftn
+  export COMP=intel
+  export MCMODEL="-mcmodel=medium"
+  module load PrgEnv-intel
+  module load craype-sandybridge
+  if [ -e makeg2tmpllib_cray.sh ]; then
+  cp makeg2tmpllib_cray.sh makeg2tmpllib.sh
+  fi
+elif [ $target = "wcoss" ]; then
+  module load ics/12.1
+  if [ -e makeg2tmpllib_wcoss.sh ]; then
+  cp makeg2tmpllib_wcoss.sh makeg2tmpllib.sh
+  fi
+elif [ $target = "theia" ]; then
+  module load intel/14.0.2
+  if [ -e makeg2tmpllib_intel.sh ]; then
+  cp makeg2tmpllib_theia.sh makeg2tmpllib.sh
+  fi
+elif [ $target = "gaea" ]; then
+  :
+elif [ $target = "jet" ]; then
+  module load intel/12.1.4
+  export COMP=intel
+  if [ -e makeg2tmpllib_intel.sh ]; then
+  cp makeg2tmpllib_wcoss.sh makeg2tmpllib.sh
+  fi
+elif [ $target = "dell" ]; then
+  module load ips/18.0.1.163 impi/18.0.1
+  if [ -e makeg2tmpllib_wcoss.sh ]; then
+  cp makeg2tmpllib_wcoss.sh makeg2tmpllib.sh
+  fi
+fi
+
+#
+#     Build g2tmpl library
+#
+if [ $VER = "v1.5.0" ]; then
+#-------------------------------------------------------------------------------
+
+
+./makeg2tmpllib.sh
+mkdir -p ../../incmod/${LIBNAME}_${VER} ../../libs/${LIBNAME}_${VER}
+if [ -v COMP ]; then
+mv ../intel/*.a ../../libs/${LIBNAME}_${VER}/.
+mv ../intel/include/*.mod ../../incmod/${LIBNAME}_${VER}/.
+#rm -rf ../intel/*.a
+rm -fr ../intel
+else
+mv ../*.a ../../libs/${LIBNAME}_${VER}/.
+mv ../include/g2tmpl_${VER}/*.mod ../../incmod/${LIBNAME}_${VER}/.
+rm -rf ../*.a
+rm -fr ../include
+fi
+###############################################################################
+else
+rm -rf   ../../incmod/${LIBNAME}_${VER} ../../libs/${LIBNAME}_${VER}/libg2tmpl_${VER}.a
+mkdir -p ../../incmod/${LIBNAME}_${VER} ../../libs/${LIBNAME}_${VER}
+make -f Makefile
+mv ../../libg2tmpl_${VER}.a ../../libs/${LIBNAME}_${VER}/libg2tmpl_${VER}.a
+fi
+#
+#     Create modulefile
+#
+cd ../../
+lwd=`pwd`
+cd $cwd
+mkdir -p $lwd/modulefiles/$LIBNAME
+cat modulefile.template | sed s:_CWD_:$lwd:g > $lwd/modulefiles/$LIBNAME/$VER
+
+exit

@@ -1,0 +1,39 @@
+#%Module######################################################################
+proc ModulesHelp { } {
+        puts stderr "Set environment veriables for graphics of nceplibs"
+}
+
+set sys         [uname sysname]
+set NCEPLIBS      _CWD_
+set lname graphics
+set ver 2.0.0
+set dlib   $NCEPLIBS/lib/$lname/v$ver
+set bname  [string toupper $lname]
+set dinc $NCEPLIBS/incmod/${lname}_${ver}
+set COMP intel
+set path $NCEPLIBS
+
+set bname1  GPH
+set bname2  GPHFONT
+set bname3  GPHCNTR
+set bname4  W3G
+set bname5  UTIL
+set bname6  DECOD_UT
+
+set lname1 gph
+set lname2 gphfont
+set lname3 gphcntr
+set lname4 w3g
+set lname5 util
+set lname6 decod_ut
+
+# Export environment variables
+setenv COMP $compiler
+setenv ${bname}_SRC  $dlib/sorc/${lname}_${ver}
+# setenv ${bname}_SRC  $dlib/src
+setenv ${bname1}_LIB8 $dlib/$compiler/$compiler_ver/lib${lname1}_v${ver}_8.a
+setenv ${bname2}_LIB8 $dlib/$compiler/$compiler_ver/lib${lname2}_v${ver}_8.a
+setenv ${bname3}_LIB8 $dlib/$compiler/$compiler_ver/lib${lname3}_v${ver}_8.a
+setenv ${bname4}_LIB8 $dlib/$compiler/$compiler_ver/lib${lname4}_v${ver}_8.a
+setenv ${bname5}_LIB  $dlib/$compiler/$compiler_ver/lib${lname5}_v${ver}.a
+setenv ${bname6}_LIB  $dlib/$compiler/$compiler_ver/lib${lname6}_v${ver}.a

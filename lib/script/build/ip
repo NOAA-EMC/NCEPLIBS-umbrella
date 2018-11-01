@@ -1,0 +1,243 @@
+#!/bin/sh
+set -eux
+#-----------------------------------------------------
+cwd=`pwd`
+source ../../../machine-setup.sh > /dev/null 2>&1
+
+#export LIBNAME=ip
+#export VER=v2.0.0
+export FCMP=ifort
+
+if [ $target = wcoss_cray ]; then
+  export FCMP=ftn
+  module load PrgEnv-intel
+  module load craype-sandybridge
+elif [ $target = "wcoss" ]; then
+  module load ics/12.1
+elif [ $target = "theia" ]; then
+  module load intel/14.0.2
+elif [ $target = "gaea" ]; then
+  :
+elif [ $target = "jet" ]; then
+  module load intel/12.1.4
+elif [ $target = "dell" ]; then
+  module load ips/18.0.1.163 impi/18.0.1
+fi
+
+if [ $VER = "v3.0.0" ]; then
+#
+#     Biuld ip v3 library
+#
+
+rm -rf ./ip ../../incmod/ip_${VER}_* ../../libs/${LIBNAME}_${VER}/libip_${VER}_*.a
+
+mkdir -p ../../incmod/ip_${VER}_4 ../../incmod/ip_${VER}_8 ../../incmod/ip_${VER}_d
+mkdir -p ../../libs/${LIBNAME}_${VER}
+
+if [ $target = "dell" ]; then
+cat > makefile.conf << EOF
+FFLAGS_4_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 32 -integer-size 32 -qopenmp"
+FFLAGS_4="-O3 -ip -fp-model strict -real-size 32 -integer-size 32 -qopenmp"
+FFLAGS_8_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 64 -qopenmp"
+FFLAGS_8="-O3 -ip -fp-model strict -real-size 64 -integer-size 64 -qopenmp"
+FFLAGS_D_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 32 -qopenmp"
+FFLAGS_D="-O3 -ip -fp-model strict -real-size 64 -integer-size 32 -qopenmp"
+AFLAGS=" "
+EOF
+
+cat > ./config-setup/ifort.setup << EOF
+export FC="ifort"
+export FCFLAGS="-O3 -fp-model strict -ip -qopenmp -I. -convert little_endian -assume byterecl"
+export LDFLAGS=" "
+export LIBS=" "
+EOF
+
+#else
+
+#FFLAGS_4_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 32 -integer-size 32 -openmp"
+#FFLAGS_4="-O3 -ip -fp-model strict -real-size 32 -integer-size 32 -openmp"
+#FFLAGS_8_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 64 -openmp"
+#FFLAGS_8="-O3 -ip -fp-model strict -real-size 64 -integer-size 64 -openmp"
+#FFLAGS_D_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 32 -openmp"
+#FFLAGS_D="-O3 -ip -fp-model strict -real-size 64 -integer-size 32 -openmp"
+#AFLAGS=" "
+fi
+
+if [ $target = wcoss_cray ]; then
+  ./make_ip_lib_wcoss-cray.sh ifort.setup
+  cp ip/${VER}/intel/libip_${VER}_*.a ../../libs/${LIBNAME}_${VER}/.
+  cp ip/${VER}/intel/include/ip_${VER}_4/* ../../incmod/ip_${VER}_4/.
+  cp ip/${VER}/intel/include/ip_${VER}_8/* ../../incmod/ip_${VER}_8/.
+  cp ip/${VER}/intel/include/ip_${VER}_d/* ../../incmod/ip_${VER}_d/.
+else
+  ./make_ip_lib.sh ifort.setup
+  cp ip/${VER}/libip_${VER}_*.a ../../libs/${LIBNAME}_${VER}/.
+  cp ip/${VER}/include/ip_${VER}_4/* ../../incmod/ip_${VER}_4/.
+  cp ip/${VER}/include/ip_${VER}_8/* ../../incmod/ip_${VER}_8/.
+  cp ip/${VER}/include/ip_${VER}_d/* ../../incmod/ip_${VER}_d/.
+fi
+
+rm -rf ip
+
+##############################################################
+elif [ $VER = "v2.0.0" ]; then
+cp ./src/* ./
+#
+#     Generate a list of object files that corresponds to the
+#     list of Fortran ( .f90 ) files in the current directory
+#
+OBJS=""
+for i in *.f
+do
+  obj=$(basename $i .f)
+  OBJS="$OBJS ${obj}.o"
+done
+#
+#     Remove make file, if it exists.  May need a new make file
+#     with an updated object file list.
+#
+if [ -f make.libip ] 
+then
+  rm -f make.libip
+fi
+#
+#     Generate a new make file ( make.libip), with the updated object list,
+#     from this HERE file.
+#
+cat > make.libip << EOF
+SHELL=/bin/sh
+
+.SUFFIXES:
+.SUFFIXES: .f90 .f .a
+
+\$(LIB):	\$(LIB)( ${OBJS} )
+
+.f90.a:
+	\$(FCMP) -c \$(FFLAGS) \$<
+	ar -ruv \$(AFLAGS) \$@ \$*.o
+	rm -f \$*.o
+
+.f.a:
+	\$(FCMP) -c \$(FFLAGS) \$<
+	ar -ruv \$(AFLAGS) \$@ \$*.o
+	rm -f \$*.o
+
+EOF
+#
+#     Read information about compiler and options
+#
+#. ./makefile.conf
+if [ $target = "dell" ]; then
+FFLAGS_4_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 32 -integer-size 32 -qopenmp"
+FFLAGS_4="-O3 -ip -fp-model strict -real-size 32 -integer-size 32 -qopenmp"
+FFLAGS_8_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 64 -qopenmp"
+FFLAGS_8="-O3 -ip -fp-model strict -real-size 64 -integer-size 64 -qopenmp"
+FFLAGS_D_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 32 -qopenmp"
+FFLAGS_D="-O3 -ip -fp-model strict -real-size 64 -integer-size 32 -qopenmp"
+AFLAGS=" "
+else
+FFLAGS_4_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 32 -integer-size 32 -openmp"
+FFLAGS_4="-O3 -ip -fp-model strict -real-size 32 -integer-size 32 -openmp"
+FFLAGS_8_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 64 -openmp"
+FFLAGS_8="-O3 -ip -fp-model strict -real-size 64 -integer-size 64 -openmp"
+FFLAGS_D_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 32 -openmp"
+FFLAGS_D="-O3 -ip -fp-model strict -real-size 64 -integer-size 32 -openmp"
+AFLAGS=" "
+fi
+
+mkdir -p ../../libs/${LIBNAME}_${VER}
+
+#
+#     Update 4-byte version of libip_4.a
+#
+export LIB="../../libs/${LIBNAME}_${VER}/libip_${VER}_4.a"
+export FCMP
+export AFLAGS
+export FFLAGS=$FFLAGS_4
+make -f make.libip
+#
+#     Update 8-byte version of libip_8.a
+#
+export LIB="../../libs/${LIBNAME}_${VER}/libip_${VER}_8.a"
+export FCMP
+export AFLAGS
+export FFLAGS=$FFLAGS_8
+make -f make.libip
+#
+#     Update Double Precision (Size of Real 8-byte and default Integer) version
+#     of libip_d.a
+#
+export LIB="../../libs/${LIBNAME}_${VER}/libip_${VER}_d.a"
+export FCMP
+export AFLAGS
+export FFLAGS=$FFLAGS_D
+make -f make.libip
+
+rm -f make.libip
+
+else
+#
+#     Biuld ip v3 library
+#
+
+rm -rf ./ip ../../incmod/ip_${VER}_* ../../libs/${LIBNAME}_${VER}/libip_${VER}_*.a
+
+mkdir -p ../../incmod/ip_${VER}_4 ../../incmod/ip_${VER}_8 ../../incmod/ip_${VER}_d
+mkdir -p ../../libs/${LIBNAME}_${VER}
+
+if [ $target = "dell" ]; then
+cat > makefile.conf << EOF
+FFLAGS_4_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 32 -integer-size 32 -qopenmp"
+FFLAGS_4="-O3 -ip -fp-model strict -real-size 32 -integer-size 32 -qopenmp"
+FFLAGS_8_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 64 -qopenmp"
+FFLAGS_8="-O3 -ip -fp-model strict -real-size 64 -integer-size 64 -qopenmp"
+FFLAGS_D_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 32 -qopenmp"
+FFLAGS_D="-O3 -ip -fp-model strict -real-size 64 -integer-size 32 -qopenmp"
+AFLAGS=" "
+EOF
+
+cat > ./config-setup/ifort.setup << EOF
+export FC="ifort"
+export FCFLAGS="-O3 -fp-model strict -ip -qopenmp -I. -convert little_endian -assume byterecl"
+export LDFLAGS=" "
+export LIBS=" "
+EOF
+
+#else
+
+#FFLAGS_4_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 32 -integer-size 32 -openmp"
+#FFLAGS_4="-O3 -ip -fp-model strict -real-size 32 -integer-size 32 -openmp"
+#FFLAGS_8_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 64 -openmp"
+#FFLAGS_8="-O3 -ip -fp-model strict -real-size 64 -integer-size 64 -openmp"
+#FFLAGS_D_DEBUG="-check all -traceback -fpe0 -ftrapuv -g -real-size 64 -integer-size 32 -openmp"
+#FFLAGS_D="-O3 -ip -fp-model strict -real-size 64 -integer-size 32 -openmp"
+#AFLAGS=" "
+fi
+
+if [ $target = wcoss_cray ]; then
+  ./make_ip_lib_wcoss-cray.sh ifort.setup
+  cp ip/${VER}/intel/libip_${VER}_*.a ../../libs/${LIBNAME}_${VER}/.
+  cp ip/${VER}/intel/include/ip_${VER}_4/* ../../incmod/ip_${VER}_4/.
+  cp ip/${VER}/intel/include/ip_${VER}_8/* ../../incmod/ip_${VER}_8/.
+  cp ip/${VER}/intel/include/ip_${VER}_d/* ../../incmod/ip_${VER}_d/.
+else
+  ./make_ip_lib.sh ifort.setup
+  cp ip/${VER}/libip_${VER}_*.a ../../libs/${LIBNAME}_${VER}/.
+  cp ip/${VER}/include/ip_${VER}_4/* ../../incmod/ip_${VER}_4/.
+  cp ip/${VER}/include/ip_${VER}_8/* ../../incmod/ip_${VER}_8/.
+  cp ip/${VER}/include/ip_${VER}_d/* ../../incmod/ip_${VER}_d/.
+fi
+
+rm -rf ip
+
+fi
+#
+#     Create modulefile
+#
+cd ../../
+lwd=`pwd`
+cd $cwd
+mkdir -p $lwd/modulefiles/$LIBNAME
+cat modulefile.template | sed s:_CWD_:$lwd:g > $lwd/modulefiles/$LIBNAME/$VER
+
+exit
