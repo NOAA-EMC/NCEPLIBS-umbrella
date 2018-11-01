@@ -1,17 +1,17 @@
-NCEPLIBS FV3 Build
+NCEPLIBS FV3GFS Build
 
 Hang Lei, Mark Iredell, George Vandenberghe
 NOAA NCEP Environmental Modeling Center(EMC), NCEPLIBS Group
 Contact: Hang.Lei@noaa.gov
 
 (1) Introduction
-This version of NCEPLIBS-umbrella build software package is specialized in supporting FV3 associated developments. It is based on the NOAA VLAB platform. The software package directly get code from the VLAB system, which required NOAA email account access. The code is based on the current indenpendent version of code preapred by each library manager. Therefore, each library version is self-compiled as well as compiled by the NCEPLIBS-umbrella script.    
+This version of NCEPLIBS-umbrella build software package is specialized in supporting FV3GFS associated developments. It is based on the NOAA VLAB platform. The software package directly get code from the VLAB system, which required NOAA email account access. The code is based on the current indenpendent version of code preapred by each library manager. Therefore, each library version is self-compiled as well as compiled by the NCEPLIBS-umbrella script.    
 
 (2) Software Structure
 
 NCEPLIBS-umbrella
             |
-            `--NCEPLIBS-FV3.sh
+            `--NCEPLIBS-FV3GFS.sh
             |
             `--setlib.conf
             |
@@ -109,10 +109,10 @@ INSTALL     | esmf                          |v7.1.0r   |              |         
 ======================================================================================
                                                                                       
 After open the file comment out the library versions that you won't comiple.
-On this release, we did not setup comipler versions, since the FV3 application requires intel compiler with required versions.
+On this release, we did not setup comipler versions, since the FV3GFS application requires intel compiler with required versions.
 
 Step B: Compile and Install Libraries
-%./NCEPLIBS-FV3.sh
+%./NCEPLIBS-FV3GFS.sh
 It will install all the libraries on your target machine under your account with the structure shown in (2).
 
 
