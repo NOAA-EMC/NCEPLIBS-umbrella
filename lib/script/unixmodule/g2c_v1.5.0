@@ -13,7 +13,7 @@ set COMP intel
 set path $NCEPLIBS
 
 setenv ${bname}_SRC  $dlib/sorc/${lname}_${ver}
-setenv ${bname}_LIB4 $dlib/libs/${lname}_${ver}/lib${lname}_${ver}_4.a 
+setenv ${bname}_LIB4 $dlib/lib/${lname}_${ver}/lib${lname}_${ver}_4.a 
 setenv LIB_NAME ${bname} 
 setenv ${bname}_VER $ver
 

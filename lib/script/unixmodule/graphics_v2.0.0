@@ -9,7 +9,7 @@ set lname graphics
 set ver 2.0.0
 set dlib   $NCEPLIBS/lib/$lname/v$ver
 set bname  [string toupper $lname]
-set dinc $NCEPLIBS/incmod/${lname}_${ver}
+set dinc $NCEPLIBS/include/${lname}_${ver}
 set COMP intel
 set path $NCEPLIBS
 

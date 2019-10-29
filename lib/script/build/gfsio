@@ -19,17 +19,21 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
 
-rm -rf ../../libs/${LIBNAME}_${VER}/libgfsio_v1.1.0_4.a ../../incmod/gfsio_v1.1.0_4 ../../modulefiles/gfsio/v1.1.0
+rm -rf ../../lib/${LIBNAME}_${VER}/libgfsio_v1.1.0_4.a ../../incmod/gfsio_v1.1.0_4 ../../modulefiles/gfsio/v1.1.0
 
 make
 
-mkdir -p ../../libs/${LIBNAME}_${VER}
-mv ../../libgfsio_v1.1.0_4.a ../../libs/${LIBNAME}_${VER}/libgfsio_v1.1.0_4.a
+mkdir -p ../../lib/${LIBNAME}_${VER}
+mv ../../libgfsio_v1.1.0_4.a ../../lib/${LIBNAME}_${VER}/libgfsio_v1.1.0_4.a
+mv ../../incmond/gfsio_v1.1.0_4 ../../include/
+rm -fr ../../incmod
+
+
 
 #
 #     Create modulefile

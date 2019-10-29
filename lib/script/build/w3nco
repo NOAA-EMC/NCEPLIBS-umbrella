@@ -19,7 +19,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
@@ -28,11 +28,11 @@ fi
 #     Build w3nco library
 #
 
-rm -rf ../../libs/${LIBNAME}_${VER}/libw3nco_${VER}* ../../incmod/w3nco_${VER}*
+rm -rf ../../lib/${LIBNAME}_${VER}/libw3nco_${VER}* ../../include/w3nco_${VER}*
 ./makelibw3_nco.sh
 
-mkdir -p ../../libs/${LIBNAME}_${VER}
-mv ../../libw3nco_${VER}*.a ../../libs/${LIBNAME}_${VER}/.
+mkdir -p ../../lib/${LIBNAME}_${VER}
+mv ../../libw3nco_${VER}*.a ../../lib/${LIBNAME}_${VER}/.
 
 #
 #     Create modulefile

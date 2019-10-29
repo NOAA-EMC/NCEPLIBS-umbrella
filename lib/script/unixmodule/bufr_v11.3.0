@@ -4,7 +4,7 @@ proc ModulesHelp { } {
 }
 
 set sys         [uname sysname]
-set ver v11.2.0
+set ver v11.3.0
 set lname bufr
 set bname BUFR
 set NCEPLIBS      _CWD_

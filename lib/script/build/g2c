@@ -20,7 +20,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 jasper/1.900.1 libpng/1.2.59 zlib/1.2.11
   cp ../../script/build/makefile/g2c/makefile_dell ./makefile 
@@ -29,10 +29,10 @@ fi
 #
 #     Build g2c library
 #
-rm -f *.o ../../libs/${LIBNAME}_${VER}/libg2c_${VER}_4.a
+rm -f *.o ../../lib/${LIBNAME}_${VER}/libg2c_${VER}_4.a
 make
-mkdir -p ../../libs/${LIBNAME}_${VER}
-mv ../../libg2c_${VER}_4.a ../../libs/${LIBNAME}_${VER}/libg2c_${VER}_4.a
+mkdir -p ../../lib/${LIBNAME}_${VER}
+mv ../../libg2c_${VER}_4.a ../../lib/${LIBNAME}_${VER}/libg2c_${VER}_4.a
 
 #
 #     Create modulefile

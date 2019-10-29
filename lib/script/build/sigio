@@ -19,7 +19,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
@@ -33,10 +33,10 @@ rm -rf sigio_v2*
 ./make_sigio_lib.sh ifort.setup
 
 
-mkdir -p ../../libs/${LIBNAME}_${VER}
-cp ${LIBNAME}_${VER}/libsigio_${VER}.a ../../libs/${LIBNAME}_${VER}/libsigio_${VER}_4.a
-mkdir -p ../../incmod/${LIBNAME}_${VER}_4
-cp ${LIBNAME}_${VER}/incmod/${LIBNAME}_${VER}/sigio_*.mod ../../incmod/${LIBNAME}_${VER}_4
+mkdir -p ../../lib/${LIBNAME}_${VER}
+cp ${LIBNAME}_${VER}/libsigio_${VER}.a ../../lib/${LIBNAME}_${VER}/libsigio_${VER}_4.a
+mkdir -p ../../include/${LIBNAME}_${VER}_4
+cp ${LIBNAME}_${VER}/incmod/${LIBNAME}_${VER}/sigio_*.mod ../../include/${LIBNAME}_${VER}_4
 
 rm -rf ${LIBNAME}_${VER}
 

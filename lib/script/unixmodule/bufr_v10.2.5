@@ -1,6 +1,6 @@
 #%Module######################################################################
 proc ModulesHelp { } {
-        puts stderr "Set environment veriables for bufr of nceplibs"
+        puts stderr "Set environment veriables for bufr of nceplib"
 }
 
 set sys         [uname sysname]
@@ -13,10 +13,10 @@ set COMP intel
 set path $NCEPLIBS
 
 setenv ${bname}_SRC  $dlib/sorc/${lname}_${ver}
-setenv ${bname}_LIB4 $dlib/libs/${lname}_${ver}/lib${lname}_${ver}_4_64.a 
-setenv ${bname}_LIB8 $dlib/libs/${lname}_${ver}/lib${lname}_${ver}_8_64.a
-setenv ${bname}_LIBd $dlib/libs/${lname}_${ver}/lib${lname}_${ver}_d_64.a
-setenv ${bname}_LIBs $dlib/libs/${lname}_${ver}/lib${lname}_${ver}_s_64.a
+setenv ${bname}_LIB4 $dlib/lib/${lname}_${ver}/lib${lname}_${ver}_4_64.a 
+setenv ${bname}_LIB8 $dlib/lib/${lname}_${ver}/lib${lname}_${ver}_8_64.a
+setenv ${bname}_LIBd $dlib/lib/${lname}_${ver}/lib${lname}_${ver}_d_64.a
+setenv ${bname}_LIBs $dlib/lib/${lname}_${ver}/lib${lname}_${ver}_s_64.a
 setenv LIB_NAME ${bname} 
 setenv ${bname}_VER $ver
 

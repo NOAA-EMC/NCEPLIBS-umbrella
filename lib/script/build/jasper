@@ -18,7 +18,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
@@ -36,10 +36,10 @@ cd jasper-1.900.1
 make
 make install
 ###########################################################
-mkdir -p $LOCAL_EXTERN/${LIBNAME}_${VER}/incmod
-mv include/${LIBNAME}/* $LOCAL_EXTERN/${LIBNAME}_${VER}/incmod/.
-mkdir -p $LOCAL_EXTERN/${LIBNAME}_${VER}/libs
-mv lib/* $LOCAL_EXTERN/${LIBNAME}_${VER}/libs/.
+mkdir -p $LOCAL_EXTERN/${LIBNAME}_${VER}/include
+mv include/${LIBNAME}/* $LOCAL_EXTERN/${LIBNAME}_${VER}/include/.
+mkdir -p $LOCAL_EXTERN/${LIBNAME}_${VER}/lib
+mv lib/* $LOCAL_EXTERN/${LIBNAME}_${VER}/lib/.
 ###########################################################
 cd $cwd
 rm -rf jasper-1.900.1

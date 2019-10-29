@@ -22,7 +22,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 fi
 
 if [ $VER = "v4.4.1.1" ]; then

@@ -1,6 +1,6 @@
 #%Module######################################################################
 proc ModulesHelp { } {
-        puts stderr "Set environment veriables for g2tmpl of nceplibs"
+        puts stderr "Set environment veriables for g2tmpl of nceplib"
 }
 
 conflict g2tmpl/v1.2.1
@@ -15,8 +15,8 @@ set COMP intel
 set path $NCEPLIBS
 
 setenv ${bname}_SRC $dlib/sorc/${lname}_${ver}
-setenv ${bname}_INC $dlib/incmod/${lname}_${ver}
-setenv ${bname}_LIB $dlib/libs/${lname}_${ver}/lib${lname}_${ver}.a
+setenv ${bname}_INC $dlib/include/${lname}_${ver}
+setenv ${bname}_LIB $dlib/lib/${lname}_${ver}/lib${lname}_${ver}.a
 setenv LIB_NAME ${bname} 
 setenv ${bname}_VER $ver
 

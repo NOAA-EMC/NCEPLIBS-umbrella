@@ -31,10 +31,10 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
-  export COMP=intel
+  module load intel
+#  export COMP=intel
   if [ -e makeg2tmpllib_intel.sh ]; then
-  cp makeg2tmpllib_wcoss.sh makeg2tmpllib.sh
+  cp makeg2tmpllib_theia.sh makeg2tmpllib.sh
   fi
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
@@ -51,24 +51,24 @@ if [ $VER = "v1.5.0" ]; then
 
 
 ./makeg2tmpllib.sh
-mkdir -p ../../incmod/${LIBNAME}_${VER} ../../libs/${LIBNAME}_${VER}
+mkdir -p ../../include/${LIBNAME}_${VER} ../../lib/${LIBNAME}_${VER}
 if [ -v COMP ]; then
-mv ../intel/*.a ../../libs/${LIBNAME}_${VER}/.
-mv ../intel/include/*.mod ../../incmod/${LIBNAME}_${VER}/.
+mv ../intel/*.a ../../lib/${LIBNAME}_${VER}/.
+mv ../intel/include/*.mod ../../include/${LIBNAME}_${VER}/.
 #rm -rf ../intel/*.a
 rm -fr ../intel
 else
-mv ../*.a ../../libs/${LIBNAME}_${VER}/.
-mv ../include/g2tmpl_${VER}/*.mod ../../incmod/${LIBNAME}_${VER}/.
+mv ../*.a ../../lib/${LIBNAME}_${VER}/.
+mv ../include/g2tmpl_${VER}/*.mod ../../include/${LIBNAME}_${VER}/.
 rm -rf ../*.a
 rm -fr ../include
 fi
 ###############################################################################
 else
-rm -rf   ../../incmod/${LIBNAME}_${VER} ../../libs/${LIBNAME}_${VER}/libg2tmpl_${VER}.a
-mkdir -p ../../incmod/${LIBNAME}_${VER} ../../libs/${LIBNAME}_${VER}
+rm -rf   ../../include/${LIBNAME}_${VER} ../../lib/${LIBNAME}_${VER}/libg2tmpl_${VER}.a
+mkdir -p ../../include/${LIBNAME}_${VER} ../../lib/${LIBNAME}_${VER}
 make -f Makefile
-mv ../../libg2tmpl_${VER}.a ../../libs/${LIBNAME}_${VER}/libg2tmpl_${VER}.a
+mv ../../libg2tmpl_${VER}.a ../../lib/${LIBNAME}_${VER}/libg2tmpl_${VER}.a
 fi
 #
 #     Create modulefile

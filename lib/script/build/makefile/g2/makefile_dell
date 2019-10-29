@@ -29,7 +29,7 @@ FC=ifort
 CC=icc
 CPP=cpp -P
 #XXW MODDIR=/nwprod/lib/incmod/g2_4
-#MODDIR=../../incmod/g2_v2.5.0_4
+#MODDIR=../../include/g2_v2.5.0_4
 
 FFLAGS=-O3 -g  -assume noold_ldout_format -module $(MODDIR)
 #XXW CFLAGS=-O3 -g $(DEFS) $(INCDIR) -D__64BIT__

@@ -32,7 +32,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
@@ -43,11 +43,11 @@ fi
 if [ $VER = "v11.0.1" ]; then
 
 export COMP=intel
-rm -f ../../libs/${LIBNAME}_${VER}/libbufr_${VER}_*.a
+rm -f ../../lib/${LIBNAME}_${VER}/libbufr_${VER}_*.a
 cp ../../script/build/makefile/bufr/makebufrlib.sh_$target makebufrlib.sh
 ./makebufrlib.sh
-mkdir -p ../../libs/${LIBNAME}_${VER}
-mv ../../intel/*.a ../../libs/${LIBNAME}_${VER}/.
+mkdir -p ../../lib/${LIBNAME}_${VER}
+mv ../../intel/*.a ../../lib/${LIBNAME}_${VER}/.
 rm -rf ../../intel makebufrlib.sh
 
 elif [ $VER = "v10.2.5" ]; then
@@ -180,13 +180,13 @@ EOF
 
 cpp $CPPFLAGS -DBUILD=NORMAL bufrlib.PRM bufrlib.prm
 
-mkdir -p ../../libs/${LIBNAME}_${VER}
+mkdir -p ../../lib/${LIBNAME}_${VER}
 
 #-------------------------------------------------------------------------------
 #   Update libbufr_4_64.a (4-byte REAL, 4-byte INT, 64-bit compilation,
 #                          Fortran optimization level 3, C optimization level 3)
  
-export LIB="../../libs/${LIBNAME}_${VER}/libbufr_v10.2.5_4_64.a"
+export LIB="../../lib/${LIBNAME}_${VER}/libbufr_v10.2.5_4_64.a"
 export FFLAGS=" -O3"
 export CFLAGS=" -O3 -DUNDERSCORE"
 export AFLAGS=" "
@@ -198,7 +198,7 @@ err_make=$?
 #   Update libbufr_8_64.a (8-byte REAL, 8-byte INT, 64-bit compilation,
 #                          Fortran optimization level 3, C optimization level 3)
  
-export LIB="../../libs/${LIBNAME}_${VER}/libbufr_v10.2.5_8_64.a"
+export LIB="../../lib/${LIBNAME}_${VER}/libbufr_v10.2.5_8_64.a"
 export FFLAGS=" -O3 -r8 -i8"
 export CFLAGS=" -O3 -DUNDERSCORE -DF77_INTSIZE_8"
 export AFLAGS=" "
@@ -210,7 +210,7 @@ err_make=$?
 #   Update libbufr_d_64.a (8-byte REAL, 4-byte INT, 64-bit compilation,
 #                          Fortran optimization level 3, C optimization level 3)
 
-export LIB="../../libs/${LIBNAME}_${VER}/libbufr_v10.2.5_d_64.a"
+export LIB="../../lib/${LIBNAME}_${VER}/libbufr_v10.2.5_d_64.a"
 export FFLAGS=" -O3 -r8"
 export CFLAGS=" -O3 -DUNDERSCORE"
 export AFLAGS=" "
@@ -227,7 +227,7 @@ cpp $CPPFLAGS -DBUILD=SUPERSIZE bufrlib.PRM bufrlib.prm
 #   Update libbufr_s_64.a (4-byte REAL, 4-byte INT, 64-bit compilation, extra-large array sizes,
 #                          Fortran optimization level 3, C optimization level 3)
  
-export LIB="../../libs/${LIBNAME}_${VER}/libbufr_v10.2.5_s_64.a"
+export LIB="../../lib/${LIBNAME}_${VER}/libbufr_v10.2.5_s_64.a"
 export FFLAGS=" -O3 $MCMODEL -shared-intel"
 export CFLAGS=" -O3 $MCMODEL -shared-intel -DUNDERSCORE"
 export AFLAGS=" "
@@ -241,7 +241,7 @@ err_make=$?
 
 rm -f make.libbufr bufrlib.prm $BNFS
 
-if [ -s ../../libs/${LIBNAME}_${VER}/libbufr_v10.2.5_s_64.a ] ; then
+if [ -s ../../lib/${LIBNAME}_${VER}/libbufr_v10.2.5_s_64.a ] ; then
    echo
    echo "SUCCESS: The script updated all BUFR archive libraries"
    echo

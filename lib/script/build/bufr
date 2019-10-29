@@ -32,7 +32,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
@@ -51,22 +51,22 @@ else
 cp ../../script/build/makefile/bufr/makebufrlib.sh_$target makebufrlib.sh
 fi
 ./makebufrlib.sh
-mkdir -p ../../libs/${LIBNAME}_${VER}
+mkdir -p ../../lib/${LIBNAME}_${VER}
  if [ $target = wcoss_cray ]; then
- mv ../../*.a ../../libs/${LIBNAME}_${VER}/.
+ mv ../../*.a ../../lib/${LIBNAME}_${VER}/.
  rm -rf ../../*.a
  else
- mv ../../intel/*.a ../../libs/${LIBNAME}_${VER}/.
+ mv ../../intel/*.a ../../lib/${LIBNAME}_${VER}/.
  rm -rf ../../intel 
  fi
 else
 
 export COMP=intel
-rm -f ../../libs/${LIBNAME}_${VER}/libbufr_${VER}_*.a
+rm -f ../../lib/${LIBNAME}_${VER}/libbufr_${VER}_*.a
 cp ../../script/build/makefile/bufr/makebufrlib.sh_$target makebufrlib.sh
 ./makebufrlib.sh
-mkdir -p ../../libs/${LIBNAME}_${VER}
-mv ../../intel/*.a ../../libs/${LIBNAME}_${VER}/.
+mkdir -p ../../lib/${LIBNAME}_${VER}
+mv ../../intel/*.a ../../lib/${LIBNAME}_${VER}/.
 rm -rf ../../intel makebufrlib.sh
 
 fi

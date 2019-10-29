@@ -21,7 +21,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
@@ -34,32 +34,46 @@ if [ $VER = "v2.2.3" ]; then
 tar xf REL-2.2.3.tar.gz
 cd REL-2.2.3
 #
-rm -rf ../../../incmod/$LIB_TEMP ../../../libs/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
+rm -rf ../../../include/$LIB_TEMP ../../../lib/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
 . config-setup/ifort.setup
 ./configure --prefix=${PWD}
 make
 make install
 #
- mkdir -p ../../../libs/${LIBNAME}_${VER}
- mv $LIB_TEMP/lib/libcrtm.a ../../../libs/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
- mkdir -p ../../../incmod/$LIB_TEMP
- mv $LIB_TEMP/include/*.mod ../../../incmod/$LIB_TEMP
+ mkdir -p ../../../lib/${LIBNAME}_${VER}
+ mv $LIB_TEMP/lib/libcrtm.a ../../../lib/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
+ mkdir -p ../../../include/$LIB_TEMP
+ mv $LIB_TEMP/include/*.mod ../../../include/$LIB_TEMP
 cd $cwd
 rm -rf REL-2.2.3
+###########################################################
+elif [ $VER = "v2.3.0" ]; then
+#
+rm -rf ../../../include/$LIB_TEMP ../../../lib/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
+. config-setup/ifort.setup
+./configure --prefix=${PWD}
+make
+make install
+#
+ mkdir -p ../../../lib/${LIBNAME}_${VER}
+ mv $LIB_TEMP/lib/libcrtm.a ../../../lib/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
+ mkdir -p ../../../include/$LIB_TEMP
+ mv $LIB_TEMP/include/*.mod ../../../include/$LIB_TEMP
+cd $cwd
 ###########################################################
 elif [ $VER = "v2.0.6" ]; then
 tar xf REL-2.0.6_nofix.tar.gz
 cd REL-2.0.6_nofix
 #
-rm -rf ../../../incmod/$LIB_TEMP ../../../libs/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
+rm -rf ../../../include/$LIB_TEMP ../../../lib/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
 . configure/ifort.setup
 make
 make install
 #
- mkdir -p ../../../libs/${LIBNAME}_${VER}
- mv lib/libCRTM.a ../../../libs/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
- mkdir -p ../../../incmod/$LIB_TEMP
- mv include/*.mod ../../../incmod/$LIB_TEMP
+ mkdir -p ../../../lib/${LIBNAME}_${VER}
+ mv lib/libCRTM.a ../../../lib/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
+ mkdir -p ../../../include/$LIB_TEMP
+ mv include/*.mod ../../../include/$LIB_TEMP
 #
 cd $cwd
 rm -rf REL-2.0.6_nofix
@@ -67,16 +81,16 @@ rm -rf REL-2.0.6_nofix
 else
 cd crtm_full_release
 #
-rm -rf ../../../incmod/$LIB_TEMP ../../../libs/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
+rm -rf ../../../include/$LIB_TEMP ../../../lib/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
 . config-setup/ifort.setup
 ./configure --prefix=${PWD}
 make
 make install
 #
- mkdir -p ../../../libs/${LIBNAME}_${VER}
- mv $LIB_TEMP/lib/libcrtm.a ../../../libs/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
- mkdir -p ../../../incmod/$LIB_TEMP
- mv $LIB_TEMP/include/*.mod ../../../incmod/$LIB_TEMP
+ mkdir -p ../../../lib/${LIBNAME}_${VER}
+ mv $LIB_TEMP/lib/libcrtm.a ../../../lib/${LIBNAME}_${VER}/lib${LIB_TEMP}.a
+ mkdir -p ../../../include/$LIB_TEMP
+ mv $LIB_TEMP/include/*.mod ../../../include/$LIB_TEMP
 cd $cwd
 
 fi

@@ -18,7 +18,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
@@ -35,8 +35,8 @@ cd zlib-1.2.6
 ./configure --prefix=$cwd/zlib-1.2.6
 make test
 ###########################################################
-mkdir -p $LOCAL_EXTERN/${LIBNAME}_${VER}/incmod
-cp zlib.h zconf.h $LOCAL_EXTERN/${LIBNAME}_${VER}/incmod/.
+mkdir -p $LOCAL_EXTERN/${LIBNAME}_${VER}/include
+cp zlib.h zconf.h $LOCAL_EXTERN/${LIBNAME}_${VER}/include/.
 mkdir -p $LOCAL_EXTERN/${LIBNAME}_${VER}/libs
 cp libz.a $LOCAL_EXTERN/${LIBNAME}_${VER}/libs/.
 ###########################################################

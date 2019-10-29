@@ -19,7 +19,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
@@ -27,7 +27,7 @@ fi
 #
 #     Build sp library
 #
-if [ $target = "dell" ]; then
+if [ $target = "dell" ] || [ $target = "jet" ]; then
 
 for i in `ls *.f`
 do
@@ -93,13 +93,14 @@ rm -f make.libsp
 #EOF
 
 #./makelibsp.sh
+#=======================================================================
 else
 ./makelibsp.sh_Linux
 fi
-mkdir -p ../../libs/${LIBNAME}_${VER}
-mv ../../libsp_v2.0.2_4.a ../../libs/${LIBNAME}_${VER}/.
-mv ../../libsp_v2.0.2_8.a ../../libs/${LIBNAME}_${VER}/.
-mv ../../libsp_v2.0.2_d.a ../../libs/${LIBNAME}_${VER}/.
+mkdir -p ../../lib/${LIBNAME}_${VER}
+mv ../../libsp_v2.0.2_4.a ../../lib/${LIBNAME}_${VER}/.
+mv ../../libsp_v2.0.2_8.a ../../lib/${LIBNAME}_${VER}/.
+mv ../../libsp_v2.0.2_d.a ../../lib/${LIBNAME}_${VER}/.
 
 #
 #     Create modulefile

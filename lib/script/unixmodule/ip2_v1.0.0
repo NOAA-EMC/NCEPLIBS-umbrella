@@ -1,14 +1,14 @@
 #%Module######################################################################
 proc ModulesHelp { } {
-        puts stderr "Set environment veriables for ip"
+        puts stderr "Set environment veriables for ip2"
 }
 
 set sys         [uname sysname]
 set NCEPLIBS      _CWD_
-set ver v3.0.1
-set lname ip
+set ver v1.0.0
+set lname ip2
 set dlib $NCEPLIBS
-set bname IP
+set bname IP2
 set COMP intel
 set path $NCEPLIBS
 

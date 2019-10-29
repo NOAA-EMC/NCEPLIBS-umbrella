@@ -19,7 +19,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
@@ -31,10 +31,10 @@ fi
 export FCS=$FCMP
 make -f makefile_4
 
-mkdir -p ../../libs/${LIBNAME}_${VER}
-cp libsfcio_${VER}_4.a ../../libs/${LIBNAME}_${VER}/.
-mkdir -p ../../incmod/${LIBNAME}_${VER}_4
-cp sfcio_module.mod ../../incmod/${LIBNAME}_${VER}_4
+mkdir -p ../../lib/${LIBNAME}_${VER}
+cp libsfcio_${VER}_4.a ../../lib/${LIBNAME}_${VER}/.
+mkdir -p ../../include/${LIBNAME}_${VER}_4
+cp sfcio_module.mod ../../include/${LIBNAME}_${VER}_4
 
 rm -f libsfcio_${VER}_4.a sfcio_module.mod
 

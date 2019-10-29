@@ -20,7 +20,7 @@ elif [ $target = "theia" ]; then
 elif [ $target = "gaea" ]; then
   :
 elif [ $target = "jet" ]; then
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 impi/18.0.1
 fi
@@ -59,12 +59,12 @@ SHELL=/bin/sh
 
 EOF
 
-mkdir -p ../../libs/${LIBNAME}_${VER}
+mkdir -p ../../lib/${LIBNAME}_${VER}
 
 #
 #     Update 4-byte version of libbacio_4.a
 #
-export LIB="../../libs/${LIBNAME}_${VER}/libbacio_${VER}_4.a"
+export LIB="../../lib/${LIBNAME}_${VER}/libbacio_${VER}_4.a"
 
 export FFLAGS=" -O3 -xHOST -traceback"
 export AFLAGS=" "
@@ -73,7 +73,7 @@ make -f make.bacio
 #
 #     Update 8-byte version of libbacio_8.a
 #
-export LIB="../../libs/${LIBNAME}_${VER}/libbacio_${VER}_8.a"
+export LIB="../../lib/${LIBNAME}_${VER}/libbacio_${VER}_8.a"
 
 export FFLAGS=" -O3 -i8 -r8 -xHOST -traceback"
 export AFLAGS=" "

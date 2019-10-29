@@ -30,7 +30,7 @@ elif [ $target = "gaea" ]; then
   flagOpt=""
 elif [ $target = "jet" ]; then
   flagOpt=""
-  module load intel/12.1.4
+  module load intel
 elif [ $target = "dell" ]; then
   module load ips/18.0.1.163 jasper/1.900.1 libpng/1.2.59 zlib/1.2.11 g2/3.1.0 w3nco/2.0.6
   cp ../../script/build/makefile/g2/makefile_dell ./makefile
@@ -40,17 +40,17 @@ fi
 #     Build g2 library
 #
 
-mkdir -p ../../libs/${LIBNAME}_${VER}
+mkdir -p ../../lib/${LIBNAME}_${VER}
 
-export LIB=../../libs/${LIBNAME}_${VER}/libg2_${VER}_4.a
-export MODDIR=../../incmod/g2_${VER}_4
+export LIB=../../lib/${LIBNAME}_${VER}/libg2_${VER}_4.a
+export MODDIR=../../include/g2_${VER}_4
 export flagFlt=""
 rm -rf $MODDIR $LIB
 mkdir -p $MODDIR
 make
 
-export LIB=../../libs/${LIBNAME}_${VER}/libg2_${VER}_d.a
-export MODDIR=../../incmod/g2_${VER}_d
+export LIB=../../lib/${LIBNAME}_${VER}/libg2_${VER}_d.a
+export MODDIR=../../include/g2_${VER}_d
 export flagFlt="-r8 -i4"
 rm -rf $MODDIR $LIB
 mkdir -p $MODDIR

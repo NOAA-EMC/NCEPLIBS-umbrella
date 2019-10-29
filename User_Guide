@@ -4,6 +4,8 @@ Hang Lei, Mark Iredell, George Vandenberghe
 NOAA NCEP Environmental Modeling Center(EMC), NCEPLIBS Group
 Contact: Hang.Lei@noaa.gov
 
+Hang Lei ---recent update on 10/29/2019
+
 (1) Introduction
 This version of NCEPLIBS-umbrella build software package is specialized in supporting FV3GFS associated developments. It is based on the NOAA VLAB platform. The software package directly get code from the VLAB system, which required NOAA email account access. The code is based on the current indenpendent version of code preapred by each library manager. Therefore, each library version is self-compiled as well as compiled by the NCEPLIBS-umbrella script.    
 
@@ -29,11 +31,11 @@ NCEPLIBS-umbrella
                 `--sorc/
                 |     `--(storage for library code)
                 |
-                `--libs/
+                `--lib/
                 |     `--(storage for lib files *.a)
                 `--ext_libs/
                 |     `--(storage for external lib files *.a)
-                `--incmod/
+                `--include/
                 |     `--(storage for inc files *.mod)
                 `--modulefiles/
                       `--(storage for unix modules)

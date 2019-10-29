@@ -11,7 +11,7 @@ cwd=`pwd`
 # --------------------------------------------------------------
 
 cd $cwd/lib
-#rm -rf sorc/* libs/* incmod/* modulefiles/* ext_libs/*
+#rm -rf src/* lib/* include/* modulefiles/* ext_libs/*
 cd $cwd
 ##
 ## read setlib.conf and then either execute the git script directly and install
@@ -51,8 +51,9 @@ cat $SET_FILE | while read -r line; do
 
       foo="_"
       libst=$LIBNAME$foo$VER
-      mkdir $cwd/lib/sorc/$libst
-      cd $cwd/lib/sorc/$libst
+      mkdir -p $cwd/lib/src
+      mkdir $cwd/lib/src/$libst
+      cd $cwd/lib/src/$libst
       if [[ $LIBG == NCEPLIBS* ]] ; then
 #      git clone https://vlab.ncep.noaa.gov/code-review/NCEPLIBS-$LIBNAME
        git clone --recursive gerrit:NCEPLIBS-$LIBNAME
@@ -141,8 +142,8 @@ done < $SET_FILE
 #    sp            \
 #    w3nco
 #do
-# mkdir $cwd/lib/sorc/$lib
-# cd $cwd/lib/sorc/$lib
+# mkdir $cwd/lib/src/$lib
+# cd $cwd/lib/src/$lib
 # git clone https://vlab.ncep.noaa.gov/code-review/NCEPLIBS-$lib
 # cd $cwd
 #done
