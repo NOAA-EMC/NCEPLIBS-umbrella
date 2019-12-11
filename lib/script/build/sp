@@ -27,7 +27,7 @@ fi
 #
 #     Build sp library
 #
-if [ $target = "dell" ] || [ $target = "jet" ]; then
+if [ $target = "dell" ] ; then
 
 for i in `ls *.f`
 do
