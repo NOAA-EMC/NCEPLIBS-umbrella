@@ -30,7 +30,7 @@ make
 
 mkdir -p ../../lib/${LIBNAME}_${VER}
 mv ../../libgfsio_v1.1.0_4.a ../../lib/${LIBNAME}_${VER}/libgfsio_v1.1.0_4.a
-mv ../../incmond/gfsio_v1.1.0_4 ../../include/
+mv ../../incmod/gfsio_v1.1.0_4 ../../include/
 rm -fr ../../incmod
 
 
